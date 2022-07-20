@@ -21,8 +21,8 @@ export default function LoginScreen({ navigation }) {
     }
     dispatch(
       loginThunk({
-        name,
-        password,
+        name: name.value,
+        password: password.value,
         loggedIn: true,
       })
     )

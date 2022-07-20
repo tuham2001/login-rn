@@ -11,7 +11,7 @@ export default function StartScreen() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={user.user.user?.loggedIn && user.user.user?.loggedIn ? "Dashboard" : "LoginScreen"}
+        initialRouteName={user.user.userReducer?.user !== null ? "Dashboard" : "LoginScreen"}
         screenOptions={{
           headerShown: false,
         }}

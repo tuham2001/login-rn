@@ -28,8 +28,8 @@ export function loginThunk(user) {
       method: 'GET',
       url: 'https://httpbin.org/basic-auth/pro/123123',
       auth: {
-        username: user.name.value,
-        password: user.password.value,
+        username: user.name,
+        password: user.password,
       },
     })
       .then((res) => {
