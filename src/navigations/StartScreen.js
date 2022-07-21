@@ -16,7 +16,7 @@ export default function StartScreen() {
           headerShown: false,
         }}
       >
-        {user !== null ?
+        {user?.name === 'pro' && user?.password === '123123' ?
           <Stack.Screen name="Dashboard" component={Dashboard} />
           :
           <Stack.Screen name="LoginScreen" component={LoginScreen} />

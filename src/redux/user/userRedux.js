@@ -8,23 +8,21 @@ export const userSlice = createSlice({
   },
   reducers: {
     loginRedux: (state, action) => {
-      if (action.payload.name === 'pro' && action.payload.password === '123123') {
-        state.user = action.payload
-        Axios({
-          method: 'GET',
-          url: 'https://httpbin.org/basic-auth/pro/123123',
-          auth: {
-            username: state.user.name,
-            password: state.user.password,
-          },
+      state.user = action.payload
+      Axios({
+        method: 'GET',
+        url: 'https://httpbin.org/basic-auth/pro/123123',
+        auth: {
+          username: state.user.name,
+          password: state.user.password,
+        },
+      })
+        .then((res) => {
+          console.log('Thành công', res)
         })
-          .then((res) => {
-            console.log('Thành công', res)
-          })
-          .catch((err) => {
-            console.log(err.message)
-          })
-      }
+        .catch((err) => {
+          console.log(err.message)
+        })
     },
     login: (state, action) => {
       state.user = action.payload
