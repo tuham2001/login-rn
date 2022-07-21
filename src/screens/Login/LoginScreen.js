@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { loginThunk } from './userSlice'
-import Background from '../components/Background'
-import Header from '../components/Header'
-import Button from '../components/Button'
-import TextInput from '../components/TextInput'
-import { nameValidator } from '../helpers/nameValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
+import { login } from '../../redux/userSlice'
+import Background from '../../components/Background'
+import Header from '../../components/Header'
+import Button from '../../components/Button'
+import TextInput from '../../components/TextInput'
+import { nameValidator } from '../../helpers/nameValidator'
+import { passwordValidator } from '../../helpers/passwordValidator'
+import { loginThunk } from '../../redux/user/userThunk'
+import { loginRedux } from '../../redux/user/userRedux'
+
 export default function LoginScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
@@ -27,10 +30,6 @@ export default function LoginScreen({ navigation }) {
       })
     )
     if (name.value && password.value && name.value === 'pro' && password.value === '123123') {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Dashboard' }],
-      })
     } else {
       alert('Name or password incorrect')
     }
