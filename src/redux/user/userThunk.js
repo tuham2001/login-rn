@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import { login, logout } from '../userSlice'
+import { login, logout } from './userRedux'
 
 export function loginThunk(user) {
   return function LoginThunk(dispatch, getState) {
@@ -18,7 +18,6 @@ export function loginThunk(user) {
       .catch((err) => {
         // console.log(err.message)
       })
-    //  maybe custom user
   }
 }
 export function logoutThunk() {

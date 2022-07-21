@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { login } from '../../redux/userSlice'
+import { loginRedux } from '../../redux/user/userRedux'
 import Background from '../../components/Background'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
@@ -8,7 +8,6 @@ import TextInput from '../../components/TextInput'
 import { nameValidator } from '../../helpers/nameValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
 import { loginThunk } from '../../redux/user/userThunk'
-import { loginRedux } from '../../redux/user/userRedux'
 
 export default function LoginScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
@@ -23,7 +22,7 @@ export default function LoginScreen({ navigation }) {
       return
     }
     dispatch(
-      loginThunk({
+      loginRedux({
         name: name.value,
         password: password.value,
         loggedIn: true,
