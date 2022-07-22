@@ -29,6 +29,10 @@ export default function LoginScreen({ navigation }) {
           loggedIn: true,
         })
       )
+      if (values.username && values.password && values.username === 'pro' && values.password === '123123') {
+      } else {
+        alert('Name or password incorrect')
+      }
     },
     validationSchema,
   });
