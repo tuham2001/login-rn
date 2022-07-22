@@ -8,10 +8,10 @@ import Dashboard from '../screens/Dashboard/Dashboard'
 export default function StartScreen() {
   const user = useSelector((state) => state.user.userReducer.user)
   const Stack = createStackNavigator()
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        // initialRouteName={user !== null ? "Dashboard" : "LoginScreen"}
         screenOptions={{
           headerShown: false,
         }}

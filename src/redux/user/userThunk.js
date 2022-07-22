@@ -1,8 +1,8 @@
 import Axios from 'axios'
-import { login, logout } from './userRedux'
+import { loginSuccess, logoutSuccess } from './userRedux'
 
-export function loginThunk(user) {
-  return function LoginThunk(dispatch, getState) {
+export function login(user) {
+  return function Login(dispatch, getState) {
     Axios({
       method: 'GET',
       url: 'https://httpbin.org/basic-auth/pro/123123',
@@ -12,7 +12,7 @@ export function loginThunk(user) {
       },
     })
       .then((res) => {
-        dispatch(login(user))
+        dispatch(loginSuccess(user))
         console.log('Thành công', res)
       })
       .catch((err) => {
@@ -20,8 +20,8 @@ export function loginThunk(user) {
       })
   }
 }
-export function logoutThunk() {
-  return function LogoutThunk(dispatch, getState) {
-    dispatch(logout())
+export function logout() {
+  return function Logout(dispatch, getState) {
+    dispatch(logoutSuccess())
   }
 }

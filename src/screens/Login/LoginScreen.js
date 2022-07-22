@@ -1,64 +1,64 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
-import { loginRedux } from '../../redux/user/userRedux'
+import { useFormik } from 'formik';
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from '@hookform/resolvers/yup';
 import Background from '../../components/Background'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
+import Logo from '../../components/Logo'
 import TextInput from '../../components/TextInput'
-import { nameValidator } from '../../helpers/nameValidator'
-import { passwordValidator } from '../../helpers/passwordValidator'
-import { loginThunk } from '../../redux/user/userThunk'
-
+import { login } from '../../redux/user/userThunk'
 export default function LoginScreen({ navigation }) {
-  const [name, setName] = useState({ value: '', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
   const dispatch = useDispatch()
-  const onLoginPressed = () => {
-    const nameError = nameValidator(name.value)
-    const passwordError = passwordValidator(password.value)
-    if (nameError || passwordError) {
-      setName({ ...name, error: nameError })
-      setPassword({ ...password, error: passwordError })
-      return
-    }
-    dispatch(
-      loginRedux({
-        name: name.value,
-        password: password.value,
-        loggedIn: true,
-      })
-    )
-    if (name.value && password.value && name.value === 'pro' && password.value === '123123') {
-    } else {
-      alert('Name or password incorrect')
-    }
-  }
-
+  const validationSchema = yup.object().shape({
+    username: yup.string().required("Username is not empty").min(2, "Password longer than 2 characters"),
+    password: yup.string().min(5).required("Password is not empty").min(6, "Password longer than 6 characters"),
+  });
+  const { values, handleChange, handleBlur, handleSubmit, touched, errors, setFieldValue } = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    onSubmit: () => {
+      dispatch(
+        login({
+          name: values.username,
+          password: values.password,
+          loggedIn: true,
+        })
+      )
+    },
+    validationSchema,
+  });
   return (
     <Background>
+      <Logo />
       <Header>Welcome back.</Header>
       <TextInput
-        label="Name"
-        returnKeyType="next"
-        value={name.value}
-        onChangeText={(text) => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
+        label="name"
+        placeholder="Name"
+        value={values.username}
+        onChangeText={handleChange('username')}
         autoCapitalize="none"
         autoCompleteType="name"
-        textContentType="nameAddress"
-        keyboardType="name-address"
+        errorText={errors.username}
+        onBlur={handleBlur('username')}
+        touched={touched.username}
       />
       <TextInput
-        label="Password"
+        label="password"
+        placeholder="Password"
         returnKeyType="done"
-        value={password.value}
-        onChangeText={(text) => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
+        value={values.password}
+        onChangeText={handleChange('password')}
         secureTextEntry
+        errorText={errors.password}
+        onBlur={handleBlur('password')}
+        touched={touched.password}
       />
-      <Button mode="contained" onPress={onLoginPressed}>
+      <Button title='Submit' mode="contained" onPress={handleSubmit}>
         Login
       </Button>
     </Background>
