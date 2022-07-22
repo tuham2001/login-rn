@@ -40,7 +40,7 @@ export default function LoginScreen({ navigation }) {
         label="name"
         placeholder="Name"
         value={values.username}
-        onChangeText={handleChange('username')}
+        onChangeText={useCallback(handleChange('username'), [])}
         autoCapitalize="none"
         autoCompleteType="name"
         errorText={errors.username}
@@ -52,7 +52,7 @@ export default function LoginScreen({ navigation }) {
         placeholder="Password"
         returnKeyType="done"
         value={values.password}
-        onChangeText={handleChange('password')}
+        onChangeText={useCallback(handleChange('password'), [])}
         secureTextEntry
         errorText={errors.password}
         onBlur={handleBlur('password')}
