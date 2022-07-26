@@ -2,7 +2,7 @@ import { loginSuccess } from "./userRedux";
 import { fork, take } from 'redux-saga/effects'
 import Axios from 'axios'
 
-export function* handleLogin() {
+function* handleLogin() {
   const action = yield take(loginSuccess.type)
   Axios({
     method: 'GET',

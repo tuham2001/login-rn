@@ -26,7 +26,7 @@ export default function LoginScreen({ navigation }) {
       if (values.username && values.password && values.username === 'pro' && values.password === '123123') {
         setIsLoading(true)
         setTimeout(() => dispatch(
-          login({
+          loginSuccess({
             name: values.username,
             password: values.password,
             loggedIn: true,
