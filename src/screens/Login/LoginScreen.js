@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik';
-import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import Background from '../../components/Background'
@@ -11,6 +10,7 @@ import Logo from '../../components/Logo'
 import Loading from '../../components/Loading'
 import TextInput from '../../components/TextInput'
 import { login } from '../../redux/user/userThunk'
+import { loginSuccess } from '../../redux/user/userRedux';
 export default function LoginScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
@@ -24,15 +24,15 @@ export default function LoginScreen({ navigation }) {
       password: '',
     },
     onSubmit: () => {
-      setIsLoading(true)
-      dispatch(
-        login({
-          name: values.username,
-          password: values.password,
-          loggedIn: true,
-        })
-      )
       if (values.username && values.password && values.username === 'pro' && values.password === '123123') {
+        setIsLoading(true)
+        setTimeout(() => dispatch(
+          loginSuccess({
+            name: values.username,
+            password: values.password,
+            loggedIn: true,
+          })
+        ), 1000)
       } else {
         setIsLoading(false)
         alert('Name or password incorrect')
