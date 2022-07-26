@@ -2,14 +2,13 @@ import { loginSuccess } from "./userRedux";
 import { fork, take } from 'redux-saga/effects'
 import Axios from 'axios'
 
-function* handleLogin() {
-  const action = yield take(loginSuccess.type)
+function* handleLogin(payload) {
   Axios({
     method: 'GET',
     url: 'https://httpbin.org/basic-auth/pro/123123',
     auth: {
-      username: action.payload.name,
-      password: action.payload.password,
+      username: payload.name,
+      password: payload.password,
     },
   })
     .then((res) => {
@@ -20,6 +19,11 @@ function* handleLogin() {
     })
 }
 
+function* watchLoginFlow() {
+  const action = yield take(loginSuccess.type)
+  yield fork(handleLogin, action.payload)
+}
+
 export default function* userSaga() {
-  yield fork(handleLogin)
+  yield fork(watchLoginFlow)
 }
