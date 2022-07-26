@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
+import { ActivityIndicator } from 'react-native'
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
 import Background from '../../components/Background'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import Logo from '../../components/Logo'
-import Loading from '../../components/Loading'
 import TextInput from '../../components/TextInput'
 import { login } from '../../redux/user/userThunk'
 import { loginSuccess } from '../../redux/user/userRedux';
@@ -27,7 +26,7 @@ export default function LoginScreen({ navigation }) {
       if (values.username && values.password && values.username === 'pro' && values.password === '123123') {
         setIsLoading(true)
         setTimeout(() => dispatch(
-          loginSuccess({
+          login({
             name: values.username,
             password: values.password,
             loggedIn: true,
@@ -66,10 +65,11 @@ export default function LoginScreen({ navigation }) {
         onBlur={handleBlur('password')}
         touched={touched.password}
       />
-      {isLoading ? <Loading /> : null}
-      <Button title='Submit' mode="contained" onPress={handleSubmit}>
-        Login
-      </Button>
+      {isLoading ? <ActivityIndicator size="large" color={'black'} /> : (
+        <Button title='Submit' mode="contained" onPress={handleSubmit}>
+          Login
+        </Button>
+      )}
     </Background>
   )
 }
