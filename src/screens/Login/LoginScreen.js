@@ -8,9 +8,11 @@ import Background from '../../components/Background'
 import Header from '../../components/Header'
 import Button from '../../components/Button'
 import Logo from '../../components/Logo'
+import Loading from '../../components/Loading'
 import TextInput from '../../components/TextInput'
 import { login } from '../../redux/user/userThunk'
 export default function LoginScreen({ navigation }) {
+  const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
   const validationSchema = yup.object().shape({
     username: yup.string().required("Username is not empty").min(2, "Password longer than 2 characters"),
@@ -22,6 +24,7 @@ export default function LoginScreen({ navigation }) {
       password: '',
     },
     onSubmit: () => {
+      setIsLoading(true)
       dispatch(
         login({
           name: values.username,
@@ -31,6 +34,7 @@ export default function LoginScreen({ navigation }) {
       )
       if (values.username && values.password && values.username === 'pro' && values.password === '123123') {
       } else {
+        setIsLoading(false)
         alert('Name or password incorrect')
       }
     },
@@ -62,6 +66,7 @@ export default function LoginScreen({ navigation }) {
         onBlur={handleBlur('password')}
         touched={touched.password}
       />
+      {isLoading ? <Loading /> : null}
       <Button title='Submit' mode="contained" onPress={handleSubmit}>
         Login
       </Button>
