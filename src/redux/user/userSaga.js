@@ -20,6 +20,6 @@ export function* handleLogin() {
     })
 }
 
-export default function* authSaga() {
+export default function* userSaga() {
   yield fork(handleLogin)
 }
