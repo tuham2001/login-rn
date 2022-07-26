@@ -1,29 +1,27 @@
 import { loginSuccess } from "./userRedux";
-import { fork, take } from 'redux-saga/effects'
+import { put, takeEvery } from 'redux-saga/effects'
 import Axios from 'axios'
+import { loginSuccessSaga, LOGIN_SUCCESS } from '../actions/actionSaga'
 
-function* handleLogin(payload) {
+function* handleLogin(action) {
+  yield put({ type: loginSuccess, action })
+
   Axios({
     method: 'GET',
     url: 'https://httpbin.org/basic-auth/pro/123123',
     auth: {
-      username: payload.name,
-      password: payload.password,
+      username: action.user.name,
+      password: action.user.password,
     },
   })
     .then((res) => {
-      console.log('Thành công', res)
+      console.log(res)
     })
     .catch((err) => {
-      // console.log(err.message)
     })
-}
 
-function* watchLoginFlow() {
-  const action = yield take(loginSuccess.type)
-  yield fork(handleLogin, action.payload)
 }
 
 export default function* userSaga() {
-  yield fork(watchLoginFlow)
+  yield takeEvery(LOGIN_SUCCESS, handleLogin)
 }
