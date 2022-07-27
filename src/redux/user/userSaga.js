@@ -17,9 +17,8 @@ function* getLogin(action) {
     })
   }
   try {
-    const response = yield call(getApi);
-    response.data = action.user
-    yield put({ type: loginSuccess.type, payload: response.data })
+    yield call(getApi);
+    yield put({ type: loginSuccess.type, payload: action.user })
   }
   catch (error) {
     yield put({ type: loginSuccess, error })
