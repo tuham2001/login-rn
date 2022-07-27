@@ -10,7 +10,7 @@ import Logo from '../../components/Logo'
 import TextInput from '../../components/TextInput'
 import { login } from '../../redux/user/userThunk'
 import { loginSuccess } from '../../redux/user/userRedux';
-import { loginSuccessSaga } from '../../redux/actions/actionSaga';
+import { loginSaga } from '../../redux/actions/actionSaga';
 export default function LoginScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
@@ -27,7 +27,7 @@ export default function LoginScreen({ navigation }) {
       if (values.username && values.password && values.username === 'pro' && values.password === '123123') {
         setIsLoading(true)
         setTimeout(() => dispatch(
-          loginSuccessSaga({
+          loginSaga({
             name: values.username,
             password: values.password,
             loggedIn: true,
