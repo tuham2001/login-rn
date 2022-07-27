@@ -19,13 +19,11 @@ function* getLogin(action) {
   try {
     const response = yield call(getApi);
     response.data = action.user
-    yield put({ type: loginSuccess, payload: response.data })
+    yield put({ type: loginSuccess.type, payload: response.data })
   }
   catch (error) {
     yield put({ type: loginSuccess, error })
   }
-
-
 }
 
 export default function* userSaga() {
