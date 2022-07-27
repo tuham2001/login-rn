@@ -1,5 +1,5 @@
 import { loginSuccess } from "./userRedux";
-import { put, takeEvery, call } from 'redux-saga/effects'
+import { put, call, takeLatest } from 'redux-saga/effects'
 import Axios from 'axios'
 import { GET_LOGIN } from '../actions/actionSaga'
 
@@ -29,5 +29,5 @@ function* getLogin(action) {
 }
 
 export default function* userSaga() {
-  yield takeEvery(GET_LOGIN, getLogin)
+  yield takeLatest(GET_LOGIN, getLogin)
 }
