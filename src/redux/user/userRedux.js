@@ -8,7 +8,8 @@ export const userSlice = createSlice({
   },
   reducers: {
     loginSuccess: (state, action) => {
-      state.user = action.action.user
+      console.log('action', action)
+      state.user = action.payload
 
       //redux
       // Axios({

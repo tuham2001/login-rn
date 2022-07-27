@@ -1,27 +1,33 @@
 import { loginSuccess } from "./userRedux";
-import { put, takeEvery } from 'redux-saga/effects'
+import { put, takeEvery, call } from 'redux-saga/effects'
 import Axios from 'axios'
-import { loginSuccessSaga, LOGIN_SUCCESS } from '../actions/actionSaga'
+import { GET_LOGIN } from '../actions/actionSaga'
 
-function* handleLogin(action) {
-  yield put({ type: loginSuccess, action })
+function* getLogin(action) {
+  const { name, password } = action.user
 
-  Axios({
-    method: 'GET',
-    url: 'https://httpbin.org/basic-auth/pro/123123',
-    auth: {
-      username: action.user.name,
-      password: action.user.password,
-    },
-  })
-    .then((res) => {
-      console.log(res)
+  function getApi() {
+    return Axios({
+      method: 'GET',
+      url: 'https://httpbin.org/basic-auth/pro/123123',
+      auth: {
+        username: name,
+        password: password,
+      },
     })
-    .catch((err) => {
-    })
+  }
+  try {
+    const response = yield call(getApi);
+    response.data = action.user
+    yield put({ type: loginSuccess, payload: response.data })
+  }
+  catch (error) {
+    yield put({ type: loginSuccess, error })
+  }
+
 
 }
 
 export default function* userSaga() {
-  yield takeEvery(LOGIN_SUCCESS, handleLogin)
+  yield takeEvery(GET_LOGIN, getLogin)
 }

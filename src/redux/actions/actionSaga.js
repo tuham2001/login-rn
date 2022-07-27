@@ -1,8 +1,8 @@
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const GET_LOGIN = 'GET_LOGIN';
 
 export const loginSuccessSaga = user => {
   return {
-    type: LOGIN_SUCCESS,
+    type: GET_LOGIN,
     user,
   };
 };
