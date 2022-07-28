@@ -24,15 +24,15 @@ export default function LoginScreen({ navigation }) {
       password: '',
     },
     onSubmit: () => {
+      setIsLoading(true)
+      setTimeout(() => dispatch(
+        loginSaga({
+          name: values.username,
+          password: values.password,
+          loggedIn: true,
+        })
+      ), 1000)
       if (values.username && values.password && values.username === 'pro' && values.password === '123123') {
-        setIsLoading(true)
-        setTimeout(() => dispatch(
-          loginSaga({
-            name: values.username,
-            password: values.password,
-            loggedIn: true,
-          })
-        ), 1000)
       } else {
         setIsLoading(false)
         alert('Name or password incorrect')
